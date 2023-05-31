@@ -8,7 +8,7 @@ from src.segmentation.u_net_network import U_Net, encoder_block, decoder_block, 
 
 
 def generate_mask(img_path, save_path):
-    model_path = "D:\\FACULTATE\\Master\\DISERTATIE\\app\\PiecePerfect\\src\\segmentation\\models\\u-net-lr-0-003.pt"
+    model_path = "D:\\FACULTATE\\Master\\DISERTATIE\\PiecePerfect\\src\\segmentation\\models\\u-net-lr-0-003.pt"
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     model = torch.load(model_path, device)
 

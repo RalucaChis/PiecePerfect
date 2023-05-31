@@ -8,7 +8,7 @@ from siamese_network import SiameseNetwork
 
 
 def find_top_5_matches(img_name, dir_path):
-    model_path = "D:\\FACULTATE\\Master\\DISERTATIE\\app\\PiecePerfect\\src\\edge_matching\\models\\inverted-second-img.pt"
+    model_path = "D:\\FACULTATE\\Master\\DISERTATIE\\PiecePerfect\\src\\edge_matching\\models\\inverted-second-img.pt"
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = torch.load(model_path, device)
     img_path = os.path.join(dir_path, img_name)
