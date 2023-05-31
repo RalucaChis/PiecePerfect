@@ -1,0 +1,36 @@
+<!DOCTYE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/home.css"/>
+    <title>PiecePerfect</title>
+</head>
+<body>
+<div class="centered">
+    <div class="row mb-4">
+        <h1 class="title">Our Mission</h1>
+        <form action="/home" method="POST">
+            <input class="go-back" type="image" src="{{ url_for('static', filename='go-back2.png') }}" alt="Submit"
+                   data-toggle="tooltip" data-placement="left" title="Back">
+        </form>
+    </div>
+    <div class="row mb-4">
+        <p>
+            Our app aims to help restorers in matching different fragments of artifacts. The user is asked to enter
+            images belonging to different pieces, select the fragment they want to match, and <i>PiecePerfect</i> will find
+            the pieces with the best match. For now, the app can only find matches for puzzle pieces, but we want to
+            expand the range of applicability in the future.
+        </p>
+    </div>
+</div>
+<div class="wave-container">
+    <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+        {#        <path d="M1440 150H0C0 56.4 297.4 0 720 0s720 56.4 720 150z"></path>#}
+        <path d="M0 75 C240 10, 480 140, 720 75 S960 -20, 1200 35 S1440 160, 1440 75 L1440 150 L0 150 Z"></path>
+    </svg>
+    <div class="color"></div>
+</div>
+</body>
+</html>

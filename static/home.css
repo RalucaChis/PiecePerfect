@@ -1,0 +1,94 @@
+body {
+    background: #405440;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color: #fff0e4;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*height: 100vh;*/
+}
+
+
+.main-text {
+    font-family: 'Times New Roman';
+    font-size: 18px;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    color: #fff0e4;
+}
+
+.title {
+    /*font-family: 'Rockwell Extra Bold';*/
+    font-size: 55px;
+    white-space: nowrap; /*Keeps the content on a single line */
+    /*margin: 0 auto; !* Gives that scrolling effect as the typing happens *!*/
+    letter-spacing: .10em; /* Adjust as needed */
+    color: #fff0e4;
+}
+
+.second-title {
+    font-size: 45px;
+    white-space: nowrap; /*Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .10em; /* Adjust as needed */
+    color: #fff0e4;
+}
+
+.magnifier {
+    height: 25%;
+    width: 10%;
+}
+
+.go-back {
+    height: 75%;
+    width: 20%;
+}
+
+.btn {
+    margin-right: 15px;
+}
+
+.btn.btn-outline-light {
+    color: #fff0e4;
+    border-color: #fff0e4;
+}
+
+.btn.btn-outline-light:hover {
+    color: #405440;
+    background-color: #fff0e4;
+    border-color: #fff0e4;
+}
+
+
+.btn.btn-outline-light:active {
+    color: #405440;
+    background-color: #fff0e4;
+    border-color: #fff0e4;
+}
+
+.wave-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /*height: 150px;*/
+    margin-top: 5px;
+    z-index: -1;
+    fill: #95b087;
+}
+
+.wave-svg {
+    fill: #95b087;
+}
+
+.color {
+    background-color: #95b087; /* Replace with your desired color for the color bar */
+    height: 5px;
+}

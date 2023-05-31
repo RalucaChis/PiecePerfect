@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/collection.css"/>
+    <title>PiecePerfect</title>
+</head>
+<body>
+<div class="content-wrapper">
+    <div class="content">
+        <div class="row">
+            <h1 class="title">My puzzle collection</h1>
+            <form action="/home" method="POST">
+                <input class="magnifier" type="image" src="{{ url_for('static', filename='go-back2.png') }}"
+                       alt="Submit" data-toggle="tooltip" data-placement="left" title="Back">
+            </form>
+        </div>
+        <div class="row">
+            <p class="main-text">
+                Increase your collection by adding new images.
+            </p>
+            <form action="/collection"
+                  method="POST"
+                  enctype="multipart/form-data">
+                <div class="file-upload btn btn-outline-light"
+                     style="margin-left: 15px; margin-right:10px; height:38px;">
+                    <label for="file">Upload new image</label>
+                    <input type="file" id="file" name="file">
+                </div>
+                <input type="submit" value="Submit" class="btn btn-outline-light" name="upload_img"/>
+            </form>
+        </div>
+        <div class="row">
+            <p class="main-text">
+                Select an image and find the most suitable
+                matches from your collection.
+            </p>
+        </div>
+        <form action="" method="POST" style="padding:10px;">
+            <div class="row">
+                {{ pagination.links }}
+                <button class="btn me-2 btn-outline-light" type="submit" onclick="set_visibility()" name="find_matches">
+                    Find matches
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                    {% for row in image_rows %}
+                        <tr>
+                            {% for image in row %}
+                                <td>
+                                    <div class="image-container">
+                                        <label class="img_name" for="puzzle_img">{{ image }}</label>
+                                        <img id="puzzle_img"
+                                             src="{{ url_for('static', filename='./puzzle_pieces/'+image) }}"
+                                             alt="Image">
+                                        <div class="checkbox-overlay">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" id="{{ image }}"
+                                                       onchange="handleCheckboxChange(this)"
+                                                       name="{{ image }}">
+                                                <span class="checkbox-icon"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        {% if matches_list %}
+            <label class="main-text">These are the most suitable pieces for {{ chosen_image }}:</label>
+            <table>
+                <tr>
+                    {% for image in matches_list %}
+                        <td>
+                            <label class="img_name" for="puzzle_img">{{ image }}</label>
+                            <img id="puzzle_img" src="{{ url_for('static', filename='./puzzle_pieces/'+image) }}" alt="Image">
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+        {% endif %}
+        {% if is_image_loaded %}
+            <div id="alert" class="alert alert-success">
+                Image loaded successfully!
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function handleCheckboxChange(checkbox) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function (cb) {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+    }
+
+    function set_visibility() {
+        document.getElementById("look").style.visibility = "visible";
+    }
+
+    setTimeout(function () {
+        var alertElement = document.getElementById('alert');
+        alertElement.parentNode.removeChild(alertElement);
+    }, 2000);
+</script>
+
+</body>
+</html>
