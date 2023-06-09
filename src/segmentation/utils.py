@@ -110,8 +110,8 @@ def add_padding_reshape_to_148(path_img):
 
 
 if __name__ == "__main__":
-    img_path = "///static//puzzle_pieces//vincent_2.JPG"
-    save_path = "///static//masks//vincent_2.JPG"
+    img_path = "D:\\FACULTATE\\Master\\DISERTATIE\\PiecePerfect\\static\\puzzle_pieces\\vincent_13.JPG"
+    save_path = "D:\\FACULTATE\\Master\\DISERTATIE\\PiecePerfect\\static\\masks\\vincent_13.JPG"
     generate_mask(img_path, save_path)
     crop_around_piece(save_path)
     add_padding_reshape_to_148(save_path)

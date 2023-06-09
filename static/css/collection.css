@@ -1,5 +1,23 @@
 body {
-    background: #405440;
+    /*background: #405440;*/
+    /* ff 3.6+ */
+    background: -moz-linear-gradient(90deg, #405440 43%, #6D8062 100%);
+
+    /* safari 5.1+,chrome 10+ */
+    background: -webkit-linear-gradient(90deg, #405440 43%, #6D8062 100%);
+
+    /* opera 11.10+ */
+    background: -o-linear-gradient(90deg, #405440 43%, #6D8062 100%);
+
+    /* ie 6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6D8062', endColorstr='#405440', GradientType=0);
+
+    /* ie 10+ */
+    background: -ms-linear-gradient(90deg, #405440 43%, #6D8062 100%);
+
+    /* global 94%+ browsers support */
+    background: linear-gradient(90deg, #405440 43%, #6D8062 100%);
+
 }
 
 .content-wrapper {
@@ -26,6 +44,13 @@ body {
 .img_name {
     color: #fff0e4;
     font-size: 15px;
+    display: block;
+}
+
+.chosen-image {
+    width: 200px;
+    height: 200px;
+    border: 4px solid #ca6e5a;
 }
 
 .title {
@@ -49,11 +74,31 @@ body {
     width: 20%;
 }
 
+.dropdown {
+    color: #fff0e4;
+    background-color: #405440;
+    border-color: #fff0e4;
+    border-radius: 5px;
+    height: 38px;
+    width: 120px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+option {
+    color: #405440;
+    background-color: #fff0e4;
+}
+
 .btn.btn-outline-light {
     color: #fff0e4;
     /*background-color: #fff0e4;*/
     border-color: #fff0e4;
-
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .btn.btn-outline-light:hover {
@@ -79,15 +124,27 @@ body {
 }
 
 
-img {
+.img {
     width: 200px;
     height: 200px;
+}
+
+.puzzle_img_name {
+    display: block;
+}
+
+.chosen_match_side {
+    position: absolute;
+    top: 35px;
+    right: 165px;
+    width: 30px;
+    height: 30px;
 }
 
 /* check box */
 .image-container {
     position: relative;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 
 .checkbox-label {
@@ -135,11 +192,11 @@ img {
 }
 
 .pagination {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
     /*padding-bottom: 20px;*/
     color: #fff0e4;
-    background-color: #405440;
+    /*background-color: #405440;*/
 }
 
 .pagination a {
@@ -184,4 +241,24 @@ table td {
     border: 1px solid #fff0e4;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loader {
+    border: 5px solid #fff0e4;
+    border-top: 5px solid #405440;
+    border-radius: 50%; /* Circular shape */
+    width: 35px;
+    height: 35px;
+    animation: spin 2s linear infinite;
+    margin-left: 10px;
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

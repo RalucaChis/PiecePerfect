@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/collection.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/collection.css"/>
     <title>PiecePerfect</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="row">
             <h1 class="title">My puzzle collection</h1>
             <form action="/home" method="POST">
-                <input class="magnifier" type="image" src="{{ url_for('static', filename='go-back2.png') }}"
+                <input class="magnifier" type="image" src="{{ url_for('static', filename='utils/go-back2.png') }}"
                        alt="Submit" data-toggle="tooltip" data-placement="left" title="Back">
             </form>
         </div>
@@ -29,39 +29,114 @@
                     <label for="file">Upload new image</label>
                     <input type="file" id="file" name="file">
                 </div>
-                <input type="submit" value="Submit" class="btn btn-outline-light" name="upload_img"/>
+                <input id="submit-image" type="submit" value="Submit" onclick="start_loader()"
+                       class="btn btn-outline-light" name="upload_img"/>
             </form>
+            <div id="loader" class="loader"></div>
         </div>
         <div class="row">
             <p class="main-text">
-                Select an image and find the most suitable
-                matches from your collection.
+                Select an image and find the most suitable matches from your collection.
+                Choose the side of the piece to be compared (default is right).
             </p>
         </div>
         <form action="" method="POST" style="padding:10px;">
             <div class="row">
-                {{ pagination.links }}
-                <button class="btn me-2 btn-outline-light" type="submit" onclick="set_visibility()" name="find_matches">
+                <button class="btn me-2 btn-outline-light" type="submit" name="find_matches" onclick="start_loader()">
                     Find matches
                 </button>
+                <select id="dropdown" class="dropdown" name="selected_option">
+                    {% for option in dropdown_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+                {% if matches_list %}
+                    <button class="btn me-2 btn-outline-light" type="submit" name="show_collection">
+                        Back to collection
+                    </button>
+                {% endif %}
+                {% if not matches_list %}
+                    {{ pagination.links }}
+                {% endif %}
             </div>
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <tbody>
-                    {% for row in image_rows %}
+            {% if not matches_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                        {% for row in image_rows %}
+                            <tr>
+                                {% for image in row %}
+                                    <td>
+                                        <div class="image-container">
+                                            <label class="img_name" for="puzzle_img">{{ image }}</label>
+                                            <img id="puzzle_img" class="img"
+                                                 src="{{ url_for('static', filename='./puzzle_pieces/'+image) }}"
+                                                 alt="Image">
+                                            <div class="checkbox-overlay">
+                                                <label class="checkbox-label">
+                                                    <input type="checkbox" id="{{ image }}"
+                                                           onchange="handleCheckboxChange(this)"
+                                                           name="{{ image }}">
+                                                    <span class="checkbox-icon"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+            {% if matches_list %}
+                <table>
+                    <tr>
+                        <td>
+                            <div class="image-container">
+                                <label class="img_name" for="chosen_img">Chosen image: {{ chosen_image }}</label>
+                                <img id="chosen_img" alt="Image" class="chosen-image"
+                                     src="{{ url_for('static', filename='./puzzle_pieces/'+chosen_image) }}">
+                                <img class="chosen_match_side"
+                                     src="{{ url_for('static', filename='./match_side/'+chosen_match_side+'.png') }}">
+                            </div>
+                        </td>
+                        {% for id in range(matches_list[0]|length) %}
+                            <td>
+                                <div class="image-container">
+                                    <label class="img_name" for="puzzle_img">{{ matches_list[0][id] }}
+                                        match {{ match_probs[0][id] }}%</label>
+                                    <img id="puzzle_img"
+                                         src="{{ url_for('static', filename='./puzzle_pieces/'+matches_list[0][id]) }}"
+                                         class="img" alt="Image">
+                                    <div class="checkbox-overlay">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="{{ matches_list[0][id] }}"
+                                                   onchange="handleCheckboxChange(this)"
+                                                   name="{{ matches_list[0][id] }}">
+                                            <span class="checkbox-icon"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% for row in range(1, matches_list|length) %}
                         <tr>
-                            {% for image in row %}
+                            {% for id in range(matches_list[row]|length) %}
                                 <td>
                                     <div class="image-container">
-                                        <label class="img_name" for="puzzle_img">{{ image }}</label>
+                                        <label class="img_name" for="puzzle_img">{{ matches_list[row][id] }}
+                                            match {{ match_probs[row][id] }}%</label>
                                         <img id="puzzle_img"
-                                             src="{{ url_for('static', filename='./puzzle_pieces/'+image) }}"
-                                             alt="Image">
+                                             src="{{ url_for('static', filename='./puzzle_pieces/'+matches_list[row][id]) }}"
+                                             class="img" alt="Image">
                                         <div class="checkbox-overlay">
                                             <label class="checkbox-label">
-                                                <input type="checkbox" id="{{ image }}"
+                                                <input type="checkbox" id="{{ matches_list[row][id] }}"
                                                        onchange="handleCheckboxChange(this)"
-                                                       name="{{ image }}">
+                                                       name="{{ matches_list[row][id] }}">
                                                 <span class="checkbox-icon"></span>
                                             </label>
                                         </div>
@@ -70,23 +145,12 @@
                             {% endfor %}
                         </tr>
                     {% endfor %}
-                    </tbody>
                 </table>
-            </div>
+                <button class="btn me-2 btn-outline-light" style="float: right;" type="submit" name="load_more">
+                    Load more results
+                </button>
+            {% endif %}
         </form>
-        {% if matches_list %}
-            <label class="main-text">These are the most suitable pieces for {{ chosen_image }}:</label>
-            <table>
-                <tr>
-                    {% for image in matches_list %}
-                        <td>
-                            <label class="img_name" for="puzzle_img">{{ image }}</label>
-                            <img id="puzzle_img" src="{{ url_for('static', filename='./puzzle_pieces/'+image) }}" alt="Image">
-                        </td>
-                    {% endfor %}
-                </tr>
-            </table>
-        {% endif %}
         {% if is_image_loaded %}
             <div id="alert" class="alert alert-success">
                 Image loaded successfully!
@@ -105,8 +169,8 @@
         });
     }
 
-    function set_visibility() {
-        document.getElementById("look").style.visibility = "visible";
+    function start_loader() {
+        document.getElementById("loader").style.display = "block";
     }
 
     setTimeout(function () {
